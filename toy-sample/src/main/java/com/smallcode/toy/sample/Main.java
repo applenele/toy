@@ -4,6 +4,8 @@ import java.util.Map;
 
 import com.smallcode.toy.core.config.BeanDefinition;
 import com.smallcode.toy.core.factory.DefaultBeanFactory;
+import com.smallcode.toy.sample.bean.BaseDomain;
+import com.smallcode.toy.sample.bean.User;
 
 /**
  *
@@ -17,5 +19,12 @@ public class Main {
 		String packageName = "com.smallcode.toy.sample";
 		DefaultBeanFactory defaultBeanFactory = new DefaultBeanFactory(packageName);
 
+//		User user = (User) defaultBeanFactory.getBean("user");
+//
+//		user.say();
+
+		User user = (User) defaultBeanFactory.getBean(BaseDomain.class);
+
+		user.say();
 	}
 }

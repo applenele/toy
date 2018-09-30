@@ -9,10 +9,12 @@ public class BeanDefinition {
 
 	private String className;
 
-	public BeanDefinition(String className) {
-		this.className = className;
-	}
+	private String parentName;
 
+	public BeanDefinition(String className, String parentName) {
+		this.className = className;
+		this.parentName = parentName;
+	}
 
 	public String getClassName() {
 		return className;
@@ -20,5 +22,13 @@ public class BeanDefinition {
 
 	public void setClassName(String className) {
 		this.className = className;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 }

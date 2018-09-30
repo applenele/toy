@@ -9,6 +9,10 @@ import com.smallcode.toy.core.annotation.Bean;
  * @date 2018/9/29
  */
 @Bean("user")
-public class User {
+public class User extends BaseDomain{
 
+
+	public void say(){
+		System.out.println("hello user");
+	}
 }

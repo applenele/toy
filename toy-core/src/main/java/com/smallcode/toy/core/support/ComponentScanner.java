@@ -1,6 +1,7 @@
 package com.smallcode.toy.core.support;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,22 +70,23 @@ public class ComponentScanner implements Scanner {
 			for (String className : classNames) {
 				try {
 					Class<?> clazz = Class.forName(className);
-					if (clazz.isAnnotationPresent(Component.class)) {
-						Component component = clazz.getAnnotation(Component.class);
-						if (component != null) {
-							String val = component.value();
-							if (val.equals("")) {
-								String clazzName = clazz.getSimpleName();
-								val = lowFirstCase(clazzName);
-							}
-							BeanDefinition beanDefinition = new BeanDefinition(className);
+					Annotation[] annotations = clazz.getAnnotations();
+					for (Annotation annotation : annotations) {
+						if (annotation.annotationType() == Component.class) {
+							String clazzName = clazz.getSimpleName();
+							String parentName = clazz.getSuperclass().getName();
+							String val = lowFirstCase(clazzName);
+							BeanDefinition beanDefinition = new BeanDefinition(className, parentName);
+							registry.registerBeanDefinition(val, beanDefinition);
+						}
+						else if (annotation.annotationType().isAnnotationPresent(Component.class)) {
+							String clazzName = clazz.getSimpleName();
+							String parentName = clazz.getSuperclass().getName();
+							String val = lowFirstCase(clazzName);
+							BeanDefinition beanDefinition = new BeanDefinition(className, parentName);
 							registry.registerBeanDefinition(val, beanDefinition);
 						}
 					}
-					else {
-						continue;
-					}
-
 				}
 				catch (ClassNotFoundException e) {
 					e.printStackTrace();
